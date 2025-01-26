@@ -1,27 +1,23 @@
-from telegram import Update
-from telegram.ext import Application, CommandHandler
+from aiogram import Bot, Dispatcher, executor, types
 import os
-
-# Optional: Keep the bot alive (if necessary)
 from keep_alive import keep_alive
 keep_alive()
 
-# Create the bot application with your token
-application = Application.builder().token(os.environ.get('7613088806:AAHGxO1ItR6K2pAVAnDdeBWkAJNEK53u5dA')).build()
+bot = Bot(token=os.environ.get('7613088806:AAHGxO1ItR6K2pAVAnDdeBWkAJNEK53u5dA'))
+dp = Dispatcher(bot)
 
-# Start command handler
-async def welcome(update: Update, context):
-    await update.message.reply("Hello! I'm Gunther Bot, Please follow my YT channel")
+@dp.message_handler(commands=['start', 'help'])
+async def welcome(message: types.Message):
+    await message.reply("Hello! Im Gunther Bot, Please follow my YT channel")
 
-# Logo command handler
-async def logo(update: Update, context):
-    await update.message.reply_photo('https://avatars.githubusercontent.com/u/62240649?v=4')
+@dp.message_handler(commands=['logo'])
+async def logo(message: types.Message):
+    await message.answer_photo('https://avatars.githubusercontent.com/u/62240649?v=4')
 
-# Set up command handlers
-application.add_handler(CommandHandler("start", welcome))
-application.add_handler(CommandHandler("help", welcome))
-application.add_handler(CommandHandler("logo", logo))
+@dp.message_handler()
+async def echo(message: types.Message):
+    await message.reply(message.text)
+
 
 if __name__ == '__main__':
-    # Run the bot
-    application.run_polling()
+    executor.start_polling(dp)
