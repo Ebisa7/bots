@@ -3,7 +3,7 @@ import os
 from keep_alive import keep_alive
 keep_alive()
 
-bot = Bot(token=os.environ.get('7613088806:AAHGxO1ItR6K2pAVAnDdeBWkAJNEK53u5dA'))
+bot = Bot(token=os.environ.get('7613088806:AAGlek9OqouZ1zfYqa-8-0hZvWKnrr_PoHw'))
 dp = Dispatcher(bot)
 
 @dp.message_handler(commands=['start', 'help'])
